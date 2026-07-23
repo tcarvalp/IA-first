@@ -56,6 +56,11 @@ Mapear o estado atual (AS IS) e desenhar o estado desejado (TO BE) do ciclo de d
 - [ ] Como é feita a gestão de defeitos? (ferramenta, fluxo, SLA)
 - [ ] Existe processo de teste exploratório?
 - [ ] Como são tratados os bugs em produção? (hotfix, rollback, comunicação)
+- [ ] Existe classificação de defeitos por severidade e prioridade? (matriz severidade × prioridade)
+- [ ] Como é definida a severidade de um defeito? (impacto no negócio, no cliente, financeiro)
+- [ ] É realizada análise de causa raiz (RCA — Root Cause Analysis) para defeitos críticos?
+- [ ] Existe análise de reincidência de defeitos? (defeitos recorrentes, mesmo módulo/causa)
+- [ ] Como os aprendizados dos RCAs realimentam a prevenção? (ações corretivas, testes adicionais)
 
 ### 5.2 Automação de Testes
 
@@ -65,6 +70,12 @@ Mapear o estado atual (AS IS) e desenhar o estado desejado (TO BE) do ciclo de d
 - [ ] Os testes estão integrados ao pipeline de CI/CD?
 - [ ] Existe teste de contrato (contract testing) para APIs?
 - [ ] Ferramentas utilizadas (Appium, Detox, Cypress, Selenium, Postman, K6, JMeter, etc.)
+- [ ] Existe controle de testes instáveis (flaky tests)? Como são identificados e tratados?
+- [ ] Existe processo de quarentena para testes instáveis?
+- [ ] Qual o tempo de execução da suíte automatizada? (é aceitável para o ciclo de entrega?)
+- [ ] Qual a confiabilidade da suíte? (taxa de falsos positivos/negativos)
+- [ ] Qual o custo/esforço de manutenção da automação? (frequência de quebras, refatorações)
+- [ ] Existe estratégia para manter a saúde da suíte ao longo do tempo? (revisão, deprecação de testes obsoletos)
 
 ### 5.3 Ambientes de Teste
 
@@ -80,6 +91,11 @@ Mapear o estado atual (AS IS) e desenhar o estado desejado (TO BE) do ciclo de d
 - [ ] Existe dashboard de qualidade?
 - [ ] Qual o histórico de incidentes em produção nos últimos 6 meses?
 - [ ] Qual o lead time de correção de bugs?
+- [ ] Existem quality gates objetivos definidos? (critérios de bloqueio de release)
+- [ ] Quais critérios bloqueiam um release? (cobertura mínima, zero defeitos críticos/bloqueantes, testes verdes)
+- [ ] Os quality gates estão automatizados no pipeline ou são verificados manualmente?
+- [ ] Existem valores-alvo (targets) definidos para as métricas no TO BE? (ex.: cobertura ≥ 80%, escape rate < X%, MTTR < Y)
+- [ ] Como os targets são acompanhados e revisados ao longo do tempo?
 
 ### 5.5 Processos e Documentação
 
@@ -89,12 +105,23 @@ Mapear o estado atual (AS IS) e desenhar o estado desejado (TO BE) do ciclo de d
 - [ ] Como funciona o processo de homologação com o PO/negócio?
 - [ ] Existe documentação de cenários de teste (casos de teste, BDD, etc.)?
 - [ ] Onde fica a documentação? (Confluence, Notion, Wiki, repositório)
+- [ ] Existe processo formal de UAT / homologação com o negócio?
+- [ ] Quem homologa as entregas? (PO, negócio, key users)
+- [ ] Os critérios de aceite formais estão definidos e acordados antes da homologação?
+- [ ] Existe registro formal de sign-off da homologação? (evidência de aprovação)
+- [ ] Como é feita a gestão do ambiente de homologação com o negócio? (acesso, massa, disponibilidade)
+- [ ] Existe SLA/prazo definido para o ciclo de homologação?
 
 ### 5.6 Compliance e Regulatório
 
 - [ ] Existem testes específicos para requisitos regulatórios (BACEN, LGPD)?
 - [ ] Como é garantida a conformidade com normas de segurança?
 - [ ] Existe auditoria de testes / evidências de execução?
+- [ ] Existem testes específicos para requisitos de Open Finance / Open Banking?
+- [ ] Como é validada a conformidade no compartilhamento de dados de extrato? (consentimento, escopo, prazo)
+- [ ] Existem testes de consentimento e revogação de compartilhamento de dados?
+- [ ] Os dados compartilhados via Open Finance são consistentes com o extrato exibido nos canais próprios?
+- [ ] Existem testes de conformidade com os padrões e APIs do Open Finance Brasil?
 
 ### 5.7 Testes Não Funcionais — Performance
 
@@ -167,6 +194,8 @@ Mapear o estado atual (AS IS) e desenhar o estado desejado (TO BE) do ciclo de d
 - [ ] QA participa da definição de SLIs/SLOs?
 - [ ] Existem testes de synthetic monitoring para o extrato?
 - [ ] Como QA monitora a saúde da feature em produção pós-deploy?
+- [ ] QA acompanha métricas e alertas nas primeiras horas após o release? (monitoramento pós-release ativo)
+- [ ] Existem critérios objetivos para abortar/reverter um release com base em observabilidade?
 
 ### 5.14 Processo de Desenvolvimento (visão QA)
 
@@ -174,6 +203,59 @@ Mapear o estado atual (AS IS) e desenhar o estado desejado (TO BE) do ciclo de d
 - [ ] QA participa do refinamento e planning?
 - [ ] Existe pair testing ou mob testing?
 - [ ] Como é o handoff dev → QA → deploy?
+- [ ] Existe prática de shift-right / testing in production como atividade de QA?
+- [ ] QA valida releases canary? (comparação de métricas entre o grupo canary e o restante)
+- [ ] QA valida o comportamento sob feature flags? (feature ligada/desligada, rollout progressivo, kill switch)
+- [ ] QA participa da validação de testes A/B? (integridade das variações, métricas de sucesso)
+- [ ] O monitoramento pós-release é tratado formalmente como etapa de QA? (não apenas responsabilidade de SRE/dev)
+
+### 5.15 Time e Capacitação de QA
+
+- [ ] Qual a quantidade de QAs alocados na squad?
+- [ ] Qual o ratio dev:QA atual? (é adequado à demanda?)
+- [ ] Qual a senioridade dos QAs? (júnior, pleno, sênior, especialistas)
+- [ ] Existe skills matrix do time de QA? (automação, performance, segurança, mobile, API, dados)
+- [ ] Os QAs possuem certificações relevantes? (CTFL/ISTQB, certificações de ferramentas/cloud)
+- [ ] Existe plano de treinamento e capacitação contínua para o time de QA?
+- [ ] Existe risco de conhecimento tribal? (dependência de pessoas-chave, bus factor)
+- [ ] O conhecimento de QA está documentado e compartilhado? (evita silos)
+- [ ] Existe plano de sucessão / backup para papéis críticos de QA?
+
+### 5.16 Test Management e Rastreabilidade
+
+- [ ] Existe ferramenta de gestão de casos de teste? (TestRail, Zephyr, Xray, qTest)
+- [ ] Os casos de teste são versionados e mantidos atualizados?
+- [ ] Existe matriz de rastreabilidade requisito → caso de teste → defeito → evidência?
+- [ ] Como é medida a cobertura de requisitos por casos de teste?
+- [ ] É possível rastrear quais requisitos não possuem casos de teste associados?
+- [ ] As execuções de teste ficam registradas com evidências vinculadas aos casos?
+- [ ] A ferramenta de gestão de testes está integrada à gestão de defeitos e ao backlog? (Jira, etc.)
+- [ ] Existe organização dos casos de teste por suítes/features/regressão?
+
+### 5.17 Cobertura Funcional do Extrato (Regras de Negócio)
+
+- [ ] Filtros por período são testados? (dia, semana, mês, período customizado, limites de intervalo)
+- [ ] A categorização de lançamentos é testada? (crédito/débito, categorias, tags)
+- [ ] A exportação do extrato é testada em todos os formatos? (PDF, OFX, CSV)
+- [ ] A geração e visualização de comprovantes é testada?
+- [ ] O cálculo e a exibição do saldo são testados? (saldo disponível, bloqueado, atual)
+- [ ] Lançamentos futuros/agendados são testados? (exibição, efetivação, cancelamento)
+- [ ] Transações PIX são testadas no extrato? (enviado, recebido, devolvido, agendado)
+- [ ] Tarifas são testadas? (cobrança, exibição, isenções)
+- [ ] Estornos e cancelamentos são testados? (reflexo no saldo e no extrato)
+- [ ] A ordenação e o agrupamento de transações são testados? (por data, valor, tipo; agrupamento por dia/categoria)
+- [ ] A consistência entre saldo e a soma dos lançamentos é validada?
+
+### 5.18 Estratégia de Teste do Portal Web
+
+- [ ] Existe estratégia de teste cross-browser? (Chrome, Edge, Safari, Firefox)
+- [ ] Quais versões de navegadores são suportadas e testadas?
+- [ ] São realizados testes de responsividade web? (desktop, tablet, diferentes resoluções)
+- [ ] Existem testes cross-channel? (jornada iniciada no mobile e continuada no web, e vice-versa)
+- [ ] A consistência de dados entre canais é validada? (mesmo extrato/saldo no mobile e no web)
+- [ ] A consistência de experiência entre canais é validada? (funcionalidades equivalentes, paridade de features)
+- [ ] Existe automação de testes web? (Cypress, Playwright, Selenium)
+- [ ] Como é garantida a paridade funcional entre o portal web e o APP mobile?
 
 ---
 

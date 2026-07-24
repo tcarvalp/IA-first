@@ -1,0 +1,110 @@
+{
+  "resumo": {
+    "total": 20,
+    "passou": 20,
+    "falhou": 0,
+    "taxa_sucesso": "100.0%"
+  },
+  "testes": [
+    {
+      "teste": "Teste 1: A página principal carrega com status 200.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 2: A página de arquivos carrega com status 200.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 3: O formulário é salvo corretamente como JSON.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 4: O JSON salvo tem a estrutura correta.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 5: Os metadados são salvos corretamente.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 6: As respostas são organizadas por seção.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 7: As estatísticas são calculadas corretamente.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 8: A pasta de salvamento é criada automaticamente.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 9: Campos marcados como 'Não se aplica' são salvos corretamente.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 10: Formulário sem respostas é salvo com campos vazios.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 11: Caracteres especiais são salvos corretamente.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 12: Múltiplos salvamentos geram arquivos diferentes.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 13: Todas as seções de perguntas estão presentes no HTML.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 14: Elementos de accordion (details/summary) estão no HTML.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 15: A barra de salvamento fixa está no HTML.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 16: O nome do arquivo segue o padrão esperado.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 17: O botão 'Não se aplica' está presente em todas as seções.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 18: Todos os entrevistadores aparecem no formulário.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 19: Todos os stakeholders aparecem no formulário.",
+      "status": "PASSOU",
+      "erro": null
+    },
+    {
+      "teste": "Teste 20: O JSON é salvo em UTF-8 com acentuação correta.",
+      "status": "PASSOU",
+      "erro": null
+    }
+  ]
+}

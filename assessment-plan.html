@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Assessment do Ciclo de Desenvolvimento de Software - Squad Extrato</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm 2.5cm;
+            @bottom-center {
+                content: "Squad Extrato — Assessment do Ciclo de Desenvolvimento de Software";
+                font-size: 8pt;
+                color: #666;
+            }
+            @bottom-right {
+                content: counter(page);
+                font-size: 8pt;
+                color: #666;
+            }
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.5;
+            color: #2c3e50;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Cover Page */
+        .cover-page {
+            page-break-after: always;
+            text-align: center;
+            padding-top: 6cm;
+        }
+        .cover-page .logo-bar {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            height: 8px;
+            width: 100%;
+            margin-bottom: 3cm;
+            border-radius: 4px;
+        }
+        .cover-page h1 {
+            font-size: 28pt;
+            color: #1a237e;
+            margin-bottom: 0.5cm;
+            font-weight: 700;
+        }
+        .cover-page h2 {
+            font-size: 16pt;
+            color: #0d47a1;
+            font-weight: 400;
+            margin-bottom: 2cm;
+        }
+        .cover-page .subtitle {
+            font-size: 12pt;
+            color: #546e7a;
+            margin-bottom: 0.5cm;
+        }
+        .cover-page .date {
+            font-size: 10pt;
+            color: #78909c;
+            margin-top: 3cm;
+        }
+
+        /* Headings */
+        h1 {
+            font-size: 20pt;
+            color: #1a237e;
+            border-bottom: 3px solid #1a237e;
+            padding-bottom: 8px;
+            margin-top: 1.5cm;
+            margin-bottom: 0.5cm;
+        }
+        h2 {
+            font-size: 14pt;
+            color: #0d47a1;
+            margin-top: 1cm;
+            margin-bottom: 0.3cm;
+            border-left: 4px solid #0d47a1;
+            padding-left: 10px;
+        }
+        h3 {
+            font-size: 11pt;
+            color: #1565c0;
+            margin-top: 0.6cm;
+            margin-bottom: 0.2cm;
+        }
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.4cm 0;
+            font-size: 9pt;
+        }
+        th {
+            background-color: #1a237e;
+            color: white;
+            padding: 8px 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 6px 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:nth-child(even) td {
+            background-color: #f5f7fa;
+        }
+        tr:hover td {
+            background-color: #e8eaf6;
+        }
+
+        /* Checklist items */
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+            margin: 0.3cm 0;
+        }
+        .checklist li {
+            padding: 4px 0 4px 28px;
+            position: relative;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 9.5pt;
+        }
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 4px;
+            color: #1a237e;
+            font-size: 12pt;
+        }
+        /* Info boxes */
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #1565c0;
+            padding: 10px 14px;
+            margin: 0.3cm 0;
+            border-radius: 0 4px 4px 0;
+        }
+        /* Section dividers */
+        .section-divider {
+            page-break-before: always;
+        }
+        /* Badge */
+        .badge {
+            display: inline-block;
+            background: #e8eaf6;
+            color: #1a237e;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 8pt;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+        .badge-green {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .badge-orange {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        /* TOC */
+        .toc {
+            page-break-after: always;
+        }
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .toc li {
+            padding: 5px 0;
+            border-bottom: 1px dotted #ccc;
+            font-size: 10pt;
+        }
+        .toc li.toc-section {
+            font-weight: 700;
+            color: #1a237e;
+            padding-top: 10px;
+            border-bottom: none;
+        }
+        p {
+            margin: 0.2cm 0;
+        }
+        /* Maturity table */
+        .maturity-table td:first-child {
+            font-weight: 700;
+            text-align: center;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+    <div class="logo-bar"></div>
+    <h1>Assessment do Ciclo de<br>Desenvolvimento de Software</h1>
+    <h2>Squad Extrato — APP Bancário</h2>
+    <p class="subtitle">Mobile + Portal Web</p>
+    <p class="subtitle">Mapeamento AS IS → TO BE</p>
+    <p class="date">Documento de Planejamento do Assessment<br>Julho 2026</p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+    <h1>Sumário</h1>
+    <ul>
+        <li class="toc-section">1. Objetivo</li>
+        <li class="toc-section">2. Escopo</li>
+        <li class="toc-section">3. Divisão de Responsabilidades</li>
+        <li class="toc-section">4. Stakeholders a Entrevistar</li>
+        <li class="toc-section">5. Itens a Levantar — Fulano 1 (Eng. Qualidade)</li>
+        <li>&nbsp;&nbsp;&nbsp;5.1 Processos de Qualidade</li>
+        <li>&nbsp;&nbsp;&nbsp;5.2 Automação de Testes</li>
+        <li>&nbsp;&nbsp;&nbsp;5.3 Ambientes de Teste</li>
+        <li>&nbsp;&nbsp;&nbsp;5.4 Métricas de Qualidade</li>
+        <li>&nbsp;&nbsp;&nbsp;5.5 Processos e Documentação</li>
+        <li>&nbsp;&nbsp;&nbsp;5.6 Compliance e Regulatório</li>
+        <li>&nbsp;&nbsp;&nbsp;5.7 Performance</li>
+        <li>&nbsp;&nbsp;&nbsp;5.8 Data Test (Qualidade de Dados)</li>
+        <li>&nbsp;&nbsp;&nbsp;5.9 Segurança</li>
+        <li>&nbsp;&nbsp;&nbsp;5.10 Acessibilidade</li>
+        <li>&nbsp;&nbsp;&nbsp;5.11 Usabilidade e Compatibilidade</li>
+        <li>&nbsp;&nbsp;&nbsp;5.12 Confiabilidade e Resiliência</li>
+        <li>&nbsp;&nbsp;&nbsp;5.13 Observabilidade (visão QA)</li>
+        <li>&nbsp;&nbsp;&nbsp;5.14 Processo de Desenvolvimento (visão QA)</li>
+        <li class="toc-section">6. Itens a Levantar — Fulano 2 (Eng. Desenvolvimento)</li>
+        <li>&nbsp;&nbsp;&nbsp;6.1 Arquitetura de Software</li>
+        <li>&nbsp;&nbsp;&nbsp;6.2 Stack Tecnológica</li>
+        <li>&nbsp;&nbsp;&nbsp;6.3 Repositórios e Versionamento</li>
+        <li>&nbsp;&nbsp;&nbsp;6.4 CI/CD e DevOps</li>
+        <li>&nbsp;&nbsp;&nbsp;6.5 Segurança no Desenvolvimento</li>
+        <li>&nbsp;&nbsp;&nbsp;6.6 Arquitetura de Infraestrutura</li>
+        <li>&nbsp;&nbsp;&nbsp;6.7 Padrões e Boas Práticas</li>
+        <li>&nbsp;&nbsp;&nbsp;6.8 Documentação Técnica</li>
+        <li>&nbsp;&nbsp;&nbsp;6.9 Observabilidade e Monitoramento</li>
+        <li class="toc-section">7. Itens Compartilhados</li>
+        <li class="toc-section">8. Artefatos a Coletar</li>
+        <li class="toc-section">9. Cronograma Sugerido</li>
+        <li class="toc-section">10. Entregáveis Finais</li>
+        <li class="toc-section">11. Critérios de Avaliação (Maturidade)</li>
+    </ul>
+</div>
+
+<!-- SECTION 1 - OBJETIVO -->
+<div class="section-divider">
+    <h1>1. Objetivo</h1>
+    <div class="info-box">
+        <p>Mapear o <strong>estado atual (AS IS)</strong> e desenhar o <strong>estado desejado (TO BE)</strong> do ciclo de desenvolvimento de software da Squad Extrato, cobrindo documentação, processos, arquitetura, tecnologias, qualidade e entrega.</p>
+    </div>
+</div>
+
+<!-- SECTION 2 - ESCOPO -->
+<h1>2. Escopo</h1>
+<ul>
+    <li>Funcionalidades de extrato no APP mobile do banco</li>
+    <li>Portal web do banco (em desenho/evolução)</li>
+    <li>Todo o ciclo de vida do software: <strong>ideação → desenvolvimento → testes → deploy → monitoramento</strong></li>
+</ul>
+
+<!-- SECTION 3 - DIVISAO DE RESPONSABILIDADES -->
+<h1>3. Divisão de Responsabilidades</h1>
+<table>
+    <thead>
+        <tr><th>Área</th><th>Responsável</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Qualidade, Testes, Processos de QA, Métricas de Defeitos</td><td><strong>Fulano 1</strong> (Engenheiro de Qualidade)</td></tr>
+        <tr><td>Desenvolvimento, Arquitetura, DevOps, Código, Frameworks</td><td><strong>Fulano 2</strong> (Engenheiro de Desenvolvimento)</td></tr>
+    </tbody>
+</table>
+
+<!-- SECTION 4 - STAKEHOLDERS -->
+<h1>4. Stakeholders a Entrevistar</h1>
+<table>
+    <thead>
+        <tr><th>Pessoa/Papel</th><th>Tópicos</th><th>Quem entrevista</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Tech Lead / Líder Técnico</td><td>Arquitetura, decisões técnicas, débitos técnicos, roadmap</td><td>Fulano 2</td></tr>
+        <tr><td>Product Owner (PO)</td><td>Backlog, priorização, requisitos, fluxo de demandas</td><td>Fulano 1 + Fulano 2</td></tr>
+        <tr><td>Scrum Master / Agile Coach</td><td>Cerimônias, métricas de fluxo, impedimentos recorrentes</td><td>Fulano 1 + Fulano 2</td></tr>
+        <tr><td>Desenvolvedores Mobile (iOS/Android)</td><td>Stack, padrões, code review, CI/CD, testes unitários</td><td>Fulano 2</td></tr>
+        <tr><td>Desenvolvedores Backend/APIs</td><td>Stack, contratos de API, integrações, observabilidade</td><td>Fulano 2</td></tr>
+        <tr><td>Desenvolvedores Frontend Web</td><td>Stack web, design system, acessibilidade</td><td>Fulano 2</td></tr>
+        <tr><td>QA / Analistas de Teste</td><td>Estratégia de testes, automação, ambientes, cobertura</td><td>Fulano 1</td></tr>
+        <tr><td>DevOps / SRE</td><td>Pipelines, infra, deploys, rollback, monitoramento</td><td>Fulano 2</td></tr>
+        <tr><td>Arquiteto de Soluções</td><td>Visão macro, integrações entre sistemas, conformidade</td><td>Fulano 2</td></tr>
+        <tr><td>UX/UI Designer</td><td>Fluxo de entrega de design, handoff, design system</td><td>Fulano 1 + Fulano 2</td></tr>
+        <tr><td>Segurança da Informação (AppSec)</td><td>SAST/DAST, políticas de segurança, compliance</td><td>Fulano 1 + Fulano 2</td></tr>
+        <tr><td>Gestor da área / Coordenação</td><td>Expectativas, metas, dores estratégicas</td><td>Fulano 1 + Fulano 2</td></tr>
+    </tbody>
+</table>
+
+<!-- SECTION 5 - FULANO 1 -->
+<div class="section-divider">
+    <h1>5. Itens a Levantar — Fulano 1 (Engenheiro de Qualidade)</h1>
+    
+    <h2>5.1 Processos de Qualidade</h2>
+    <ul class="checklist">
+        <li>Existe estratégia de teste documentada?</li>
+        <li>Quais tipos de teste são executados? (unitário, integração, E2E, regressão, performance, segurança, acessibilidade)</li>
+        <li>Qual a cobertura de testes automatizados atual?</li>
+        <li>Existe pirâmide de testes definida?</li>
+        <li>Como é feita a gestão de defeitos? (ferramenta, fluxo, SLA)</li>
+        <li>Existe processo de teste exploratório?</li>
+        <li>Como são tratados os bugs em produção? (hotfix, rollback, comunicação)</li>
+    </ul>
+
+    <h2>5.2 Automação de Testes</h2>
+    <ul class="checklist">
+        <li>Quais frameworks de automação são utilizados? (mobile, API, web)</li>
+        <li>Existe automação de testes de regressão?</li>
+        <li>Qual a frequência de execução dos testes automatizados?</li>
+        <li>Os testes estão integrados ao pipeline de CI/CD?</li>
+        <li>Existe teste de contrato (contract testing) para APIs?</li>
+        <li>Ferramentas utilizadas (Appium, Detox, Cypress, Selenium, Postman, K6, JMeter, etc.)</li>
+    </ul>
+
+    <h2>5.3 Ambientes de Teste</h2>
+    <ul class="checklist">
+        <li>Quantos ambientes existem? (dev, QA, staging, homologação, produção)</li>
+        <li>Como é feita a gestão de dados de teste?</li>
+        <li>Existe massa de dados anonimizada/sintética?</li>
+        <li>Os ambientes são estáveis e representativos de produção?</li>
+        <li>Existe ambiente de performance isolado?</li>
+    </ul>
+
+    <h2>5.4 Métricas de Qualidade</h2>
+    <ul class="checklist">
+        <li>Quais métricas são acompanhadas? (taxa de defeitos, escape rate, MTTR, cobertura, etc.)</li>
+        <li>Existe dashboard de qualidade?</li>
+        <li>Qual o histórico de incidentes em produção nos últimos 6 meses?</li>
+        <li>Qual o lead time de correção de bugs?</li>
+    </ul>
+
+    <h2>5.5 Processos e Documentação</h2>
+    <ul class="checklist">
+        <li>Existe Definition of Ready (DoR) e Definition of Done (DoD)?</li>
+        <li>Os critérios de aceite são claros nas histórias?</li>
+        <li>Existe processo de review de qualidade antes do deploy?</li>
+        <li>Como funciona o processo de homologação com o PO/negócio?</li>
+        <li>Existe documentação de cenários de teste (casos de teste, BDD, etc.)?</li>
+        <li>Onde fica a documentação? (Confluence, Notion, Wiki, repositório)</li>
+    </ul>
+
+    <h2>5.6 Compliance e Regulatório</h2>
+    <ul class="checklist">
+        <li>Existem testes específicos para requisitos regulatórios (BACEN, LGPD)?</li>
+        <li>Como é garantida a conformidade com normas de segurança?</li>
+        <li>Existe auditoria de testes / evidências de execução?</li>
+    </ul>
+
+    <h2>5.7 Testes Não Funcionais — Performance</h2>
+    <ul class="checklist">
+        <li>Existe estratégia de testes de performance documentada?</li>
+        <li>Quais tipos de teste de performance são executados? (carga, estresse, pico, endurance/soak, escalabilidade)</li>
+        <li>Quais ferramentas são utilizadas? (JMeter, Gatling, K6, Locust, Artillery, NeoLoad)</li>
+        <li>Existe baseline de performance definida? (tempo de resposta aceitável, throughput mínimo)</li>
+        <li>Os testes de performance são executados em ambiente dedicado ou compartilhado?</li>
+        <li>Existe monitoramento de performance no mobile? (tempo de renderização, consumo de memória, CPU, bateria)</li>
+        <li>Como são definidos os SLAs de performance para o extrato? (ex.: carregamento em &lt; 2s no P95)</li>
+        <li>Existe teste de performance integrado ao pipeline de CI/CD?</li>
+        <li>São realizados testes de capacidade antes de grandes releases ou campanhas?</li>
+        <li>Existe análise de degradação de performance entre versões?</li>
+    </ul>
+
+    <h2>5.8 Testes Não Funcionais — Data Test (Qualidade de Dados)</h2>
+    <ul class="checklist">
+        <li>Existe estratégia de validação/qualidade de dados?</li>
+        <li>Como é garantida a integridade dos dados do extrato? (consistência entre core banking e APP)</li>
+        <li>Existem testes de validação de dados ponta a ponta? (origem → API → apresentação no APP)</li>
+        <li>Existe monitoramento de data quality em produção? (dados ausentes, duplicados, inconsistentes)</li>
+        <li>Como é validada a precisão dos valores monetários no extrato? (casas decimais, arredondamento, moeda)</li>
+        <li>Existem testes de migração de dados?</li>
+        <li>Existe validação de dados em cenários de alta volumetria? (contas com milhares de transações)</li>
+        <li>Como é tratada a paginação e lazy loading no extrato com grandes volumes?</li>
+        <li>Existe teste de reconciliação entre dados exibidos no APP vs. portal web vs. core banking?</li>
+        <li>Como é garantida a conformidade LGPD nos dados de teste? (anonimização, mascaramento)</li>
+    </ul>
+
+    <h2>5.9 Testes Não Funcionais — Segurança</h2>
+    <ul class="checklist">
+        <li>Existem testes de segurança específicos para o APP mobile? (OWASP Mobile Top 10)</li>
+        <li>É realizado pentest periódico na funcionalidade de extrato?</li>
+        <li>Existem testes de autenticação e autorização? (token expirado, session hijacking, privilege escalation)</li>
+        <li>São testados cenários de vazamento de dados sensíveis? (logs, cache, screenshots do extrato)</li>
+        <li>Existe validação de criptografia em trânsito e em repouso?</li>
+        <li>Testes de certificate pinning são realizados?</li>
+        <li>Como é testada a proteção contra scraping/automação maliciosa no extrato?</li>
+    </ul>
+
+    <h2>5.10 Testes Não Funcionais — Acessibilidade</h2>
+    <ul class="checklist">
+        <li>Existe estratégia de testes de acessibilidade?</li>
+        <li>Quais guidelines são seguidos? (WCAG 2.1, diretrizes de acessibilidade iOS/Android)</li>
+        <li>São realizados testes com leitores de tela? (VoiceOver, TalkBack)</li>
+        <li>Existe validação de contraste, tamanhos de fonte e áreas de toque?</li>
+        <li>A funcionalidade de extrato é navegável via teclado / controles alternativos?</li>
+        <li>Existe automação de testes de acessibilidade? (axe, Accessibility Scanner)</li>
+    </ul>
+
+    <h2>5.11 Testes Não Funcionais — Usabilidade e Compatibilidade</h2>
+    <ul class="checklist">
+        <li>Existe matrix de dispositivos/OS suportados para testes?</li>
+        <li>São realizados testes em dispositivos reais ou apenas emuladores?</li>
+        <li>Existe device farm? (BrowserStack, AWS Device Farm, Samsung Remote Test Lab)</li>
+        <li>Como é testada a compatibilidade com diferentes resoluções e tamanhos de tela?</li>
+        <li>São realizados testes de comportamento offline / conectividade intermitente?</li>
+        <li>Existe teste de instalação, atualização e migração de versão do APP?</li>
+        <li>São testados cenários de interrupção? (chamada telefônica, notificação, multitasking)</li>
+    </ul>
+
+    <h2>5.12 Testes Não Funcionais — Confiabilidade e Resiliência</h2>
+    <ul class="checklist">
+        <li>Existem testes de resiliência / chaos engineering?</li>
+        <li>São testados cenários de falha de dependências? (API indisponível, timeout, core banking fora)</li>
+        <li>Como é validado o comportamento do APP em cenários de erro? (mensagens amigáveis, retry, fallback)</li>
+        <li>Existe teste de recuperação após falhas? (crash recovery, persistência de estado)</li>
+        <li>São realizados testes de concorrência? (múltiplas sessões, race conditions)</li>
+        <li>Existe SLA de disponibilidade definido e testado para o extrato?</li>
+    </ul>
+
+    <h2>5.13 Testes Não Funcionais — Observabilidade e Monitoramento (visão QA)</h2>
+    <ul class="checklist">
+        <li>QA valida que os logs e traces estão sendo gerados corretamente?</li>
+        <li>Existe teste de alertas? (o alerta dispara corretamente quando o SLO é violado?)</li>
+        <li>QA participa da definição de SLIs/SLOs?</li>
+        <li>Existem testes de synthetic monitoring para o extrato?</li>
+        <li>Como QA monitora a saúde da feature em produção pós-deploy?</li>
+    </ul>
+
+    <h2>5.14 Processo de Desenvolvimento (visão QA)</h2>
+    <ul class="checklist">
+        <li>Em que momento QA entra no ciclo? (shift-left?)</li>
+        <li>QA participa do refinamento e planning?</li>
+        <li>Existe pair testing ou mob testing?</li>
+        <li>Como é o handoff dev → QA → deploy?</li>
+    </ul>
+</div>
+
+<!-- SECTION 6 - FULANO 2 -->
+<div class="section-divider">
+    <h1>6. Itens a Levantar — Fulano 2 (Engenheiro de Desenvolvimento)</h1>
+
+    <h2>6.1 Arquitetura de Software</h2>
+    <ul class="checklist">
+        <li>Qual a arquitetura do APP mobile? (nativo, híbrido, cross-platform)</li>
+        <li>Plataformas suportadas (iOS, Android, versões mínimas)</li>
+        <li>Arquitetura do backend (monolito, microsserviços, serverless, event-driven)</li>
+        <li>Existe BFF (Backend for Frontend)?</li>
+        <li>Como é a comunicação mobile ↔ backend? (REST, GraphQL, gRPC, WebSocket)</li>
+        <li>Existe arquitetura documentada (C4 Model, diagramas de contexto, componentes)?</li>
+        <li>Quais integrações existem? (core banking, mainframe, APIs de terceiros)</li>
+        <li>Existe API Gateway? Qual?</li>
+        <li>Como é o gerenciamento de estado no mobile?</li>
+    </ul>
+
+    <h2>6.2 Stack Tecnológica</h2>
+    <ul class="checklist">
+        <li>Linguagens utilizadas (mobile: Swift, Kotlin, React Native, Flutter; backend: Java, Node.js, Go, etc.)</li>
+        <li>Frameworks e bibliotecas principais</li>
+        <li>Banco de dados utilizado (relacional, NoSQL, cache)</li>
+        <li>Mensageria (Kafka, RabbitMQ, SQS, etc.)</li>
+        <li>Ferramentas de observabilidade (Datadog, Dynatrace, Splunk, Grafana, etc.)</li>
+        <li>Stack do portal web (React, Angular, Vue, etc.)</li>
+    </ul>
+
+    <h2>6.3 Repositórios e Versionamento</h2>
+    <ul class="checklist">
+        <li>Onde fica o código? (GitHub, GitLab, Bitbucket, Azure DevOps)</li>
+        <li>Estratégia de branching (GitFlow, trunk-based, feature flags)</li>
+        <li>Existe mono-repo ou multi-repo?</li>
+        <li>Como é feito o code review? (pull requests, pair programming)</li>
+        <li>Existem padrões de commit? (conventional commits)</li>
+        <li>Existe linting e formatação automatizada?</li>
+    </ul>
+
+    <h2>6.4 CI/CD e DevOps</h2>
+    <ul class="checklist">
+        <li>Qual ferramenta de CI/CD? (Jenkins, GitHub Actions, GitLab CI, Azure Pipelines)</li>
+        <li>Como é o pipeline? (build → testes → análise estática → deploy)</li>
+        <li>Frequência de deploys (diário, semanal, quinzenal, por sprint)</li>
+        <li>Existe deploy automatizado ou há gates manuais?</li>
+        <li>Como funciona o rollback?</li>
+        <li>Existe feature flag / toggle? Qual ferramenta?</li>
+        <li>Como é publicado o APP nas stores? (manual, Fastlane, App Center)</li>
+        <li>Existe blue/green ou canary deployment?</li>
+    </ul>
+
+    <h2>6.5 Segurança no Desenvolvimento</h2>
+    <ul class="checklist">
+        <li>Existe SAST integrado ao pipeline? (SonarQube, Checkmarx, Fortify)</li>
+        <li>Existe DAST? (OWASP ZAP, Burp)</li>
+        <li>Existe SCA (Software Composition Analysis) para dependências?</li>
+        <li>Como é feita a gestão de secrets? (Vault, AWS Secrets Manager, variáveis de CI)</li>
+        <li>Existe code signing para os apps mobile?</li>
+        <li>Existe processo de security review?</li>
+    </ul>
+
+    <h2>6.6 Arquitetura de Infraestrutura</h2>
+    <ul class="checklist">
+        <li>Cloud provider (AWS, Azure, GCP, on-premise, híbrido)</li>
+        <li>Containers? (Docker, Kubernetes, ECS)</li>
+        <li>IaC? (Terraform, CloudFormation, Pulumi)</li>
+        <li>CDN para assets?</li>
+        <li>Estratégia de escalabilidade</li>
+    </ul>
+
+    <h2>6.7 Padrões e Boas Práticas de Código</h2>
+    <ul class="checklist">
+        <li>Existe guia de estilo / coding standards documentado?</li>
+        <li>Padrões de arquitetura no mobile (MVVM, Clean Architecture, MVI)</li>
+        <li>Padrões de arquitetura no backend (DDD, hexagonal, clean)</li>
+        <li>Existe ADR (Architecture Decision Records)?</li>
+        <li>Como é tratado débito técnico? Existe backlog priorizado?</li>
+        <li>Existe documentação de APIs? (Swagger/OpenAPI, AsyncAPI)</li>
+    </ul>
+
+    <h2>6.8 Documentação Técnica</h2>
+    <ul class="checklist">
+        <li>Existe documentação de onboarding para novos devs?</li>
+        <li>Diagramas de sequência dos principais fluxos (extrato, filtros, comprovantes)</li>
+        <li>Existe runbook para incidentes?</li>
+        <li>Documentação de integrações está atualizada?</li>
+        <li>Onde fica a documentação técnica? (repo, wiki, Confluence)</li>
+    </ul>
+
+    <h2>6.9 Observabilidade e Monitoramento</h2>
+    <ul class="checklist">
+        <li>Existe APM (Application Performance Monitoring)?</li>
+        <li>Logs estruturados? Centralização de logs?</li>
+        <li>Distributed tracing?</li>
+        <li>Alertas configurados? (latência, erro rate, disponibilidade)</li>
+        <li>SLIs/SLOs definidos para o extrato?</li>
+        <li>Existe crash reporting para mobile? (Crashlytics, Sentry)</li>
+    </ul>
+</div>
+
+<!-- SECTION 7 - COMPARTILHADOS -->
+<div class="section-divider">
+    <h1>7. Itens Compartilhados (Fulano 1 + Fulano 2)</h1>
+
+    <h2>7.1 Processo de Desenvolvimento (Visão Geral)</h2>
+    <ul class="checklist">
+        <li>Qual metodologia ágil é utilizada? (Scrum, Kanban, SAFe, híbrido)</li>
+        <li>Duração da sprint / cadência de entregas</li>
+        <li>Quais cerimônias são realizadas? (planning, daily, review, retro, refinement)</li>
+        <li>Como é o fluxo de uma demanda? (ideação → refinamento → dev → QA → deploy → monitoramento)</li>
+        <li>Existe Kanban board? Qual ferramenta? (Jira, Azure Boards, Linear)</li>
+        <li>Quais métricas de fluxo são acompanhadas? (lead time, cycle time, throughput, WIP)</li>
+    </ul>
+
+    <h2>7.2 Gestão de Requisitos e Documentação Funcional</h2>
+    <ul class="checklist">
+        <li>Como chegam as demandas para a squad?</li>
+        <li>Quem escreve as histórias de usuário?</li>
+        <li>Existe documentação funcional das features de extrato?</li>
+        <li>Existe mapeamento de jornadas do usuário?</li>
+        <li>Como é feito o refinamento técnico?</li>
+    </ul>
+
+    <h2>7.3 Comunicação e Colaboração</h2>
+    <ul class="checklist">
+        <li>Canais de comunicação (Slack, Teams, etc.)</li>
+        <li>Como é a interação com outras squads / dependências?</li>
+        <li>Existe documentação de interfaces entre squads?</li>
+        <li>Como são tratadas dependências externas?</li>
+    </ul>
+
+    <h2>7.4 Gestão de Incidentes</h2>
+    <ul class="checklist">
+        <li>Existe processo de incident management?</li>
+        <li>Como é o war room / resposta a incidentes?</li>
+        <li>Existe post-mortem / blameless retrospective?</li>
+        <li>Qual o MTTR (Mean Time to Recovery) atual?</li>
+    </ul>
+</div>
+
+<!-- SECTION 8 - ARTEFATOS -->
+<div class="section-divider">
+    <h1>8. Artefatos a Coletar</h1>
+    <table>
+        <thead>
+            <tr><th>Artefato</th><th>Responsável</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Diagrama de arquitetura atual</td><td><span class="badge">Fulano 2</span></td></tr>
+            <tr><td>Pipeline de CI/CD (screenshot ou YAML)</td><td><span class="badge">Fulano 2</span></td></tr>
+            <tr><td>Lista de repositórios e owners</td><td><span class="badge">Fulano 2</span></td></tr>
+            <tr><td>Estratégia de testes documentada</td><td><span class="badge-green badge">Fulano 1</span></td></tr>
+            <tr><td>Relatórios de cobertura de testes</td><td><span class="badge-green badge">Fulano 1</span></td></tr>
+            <tr><td>Dashboard de métricas de qualidade</td><td><span class="badge-green badge">Fulano 1</span></td></tr>
+            <tr><td>Board do Jira / ferramenta de gestão</td><td><span class="badge-orange badge">Fulano 1 + Fulano 2</span></td></tr>
+            <tr><td>Documentação funcional existente</td><td><span class="badge-orange badge">Fulano 1 + Fulano 2</span></td></tr>
+            <tr><td>Relatórios de incidentes recentes</td><td><span class="badge-orange badge">Fulano 1 + Fulano 2</span></td></tr>
+            <tr><td>Documentação de APIs (Swagger/OpenAPI)</td><td><span class="badge">Fulano 2</span></td></tr>
+            <tr><td>Relatórios de segurança (SAST/DAST)</td><td><span class="badge">Fulano 2</span></td></tr>
+            <tr><td>Casos de teste / cenários automatizados</td><td><span class="badge-green badge">Fulano 1</span></td></tr>
+            <tr><td>Métricas de fluxo (lead time, cycle time)</td><td><span class="badge-orange badge">Fulano 1 + Fulano 2</span></td></tr>
+            <tr><td>Runbooks e playbooks de incidentes</td><td><span class="badge">Fulano 2</span></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION 9 - CRONOGRAMA -->
+<h1>9. Cronograma Sugerido</h1>
+<table>
+    <thead>
+        <tr><th>Fase</th><th>Duração</th><th>Atividade</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Semana 1</strong></td><td>5 dias</td><td>Kickoff, alinhamento, agendamento de entrevistas</td></tr>
+        <tr><td><strong>Semana 2-3</strong></td><td>10 dias</td><td>Entrevistas e coleta de artefatos (AS IS)</td></tr>
+        <tr><td><strong>Semana 4</strong></td><td>5 dias</td><td>Consolidação do AS IS, identificação de gaps</td></tr>
+        <tr><td><strong>Semana 5</strong></td><td>5 dias</td><td>Desenho do TO BE com recomendações</td></tr>
+        <tr><td><strong>Semana 6</strong></td><td>5 dias</td><td>Validação com stakeholders, plano de ação</td></tr>
+    </tbody>
+</table>
+
+<!-- SECTION 10 - ENTREGAVEIS -->
+<h1>10. Entregáveis Finais</h1>
+<table>
+    <thead>
+        <tr><th>#</th><th>Entregável</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>1</strong></td><td>Documento AS IS</td><td>Estado atual detalhado de processos, arquitetura, qualidade e ferramentas</td></tr>
+        <tr><td><strong>2</strong></td><td>Gap Analysis</td><td>Lacunas identificadas entre o estado atual e as melhores práticas de mercado</td></tr>
+        <tr><td><strong>3</strong></td><td>Documento TO BE</td><td>Estado desejado com recomendações priorizadas</td></tr>
+        <tr><td><strong>4</strong></td><td>Roadmap de Evolução</td><td>Plano de ação com quick wins e iniciativas de médio/longo prazo</td></tr>
+        <tr><td><strong>5</strong></td><td>Matriz de Riscos</td><td>Riscos identificados e mitigações propostas</td></tr>
+    </tbody>
+</table>
+
+<!-- SECTION 11 - CRITERIOS DE AVALIACAO -->
+<div class="section-divider">
+    <h1>11. Critérios de Avaliação (Maturidade)</h1>
+    <p>Para cada dimensão, classificar em níveis:</p>
+    <table class="maturity-table">
+        <thead>
+            <tr><th>Nível</th><th>Descrição</th></tr>
+        </thead>
+        <tbody>
+            <tr><td style="background:#ffcdd2; color:#b71c1c;">1 - Inicial</td><td>Processos ad-hoc, sem padronização</td></tr>
+            <tr><td style="background:#ffe0b2; color:#e65100;">2 - Repetível</td><td>Processos básicos definidos, execução inconsistente</td></tr>
+            <tr><td style="background:#fff9c4; color:#f57f17;">3 - Definido</td><td>Processos documentados e seguidos</td></tr>
+            <tr><td style="background:#c8e6c9; color:#2e7d32;">4 - Gerenciado</td><td>Processos medidos e controlados</td></tr>
+            <tr><td style="background:#bbdefb; color:#0d47a1;">5 - Otimizado</td><td>Melhoria contínua baseada em dados</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Dimensões a Avaliar</h2>
+    <table>
+        <thead>
+            <tr><th>#</th><th>Dimensão</th><th>Nível Atual</th><th>Nível Desejado</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Gestão de Requisitos</td><td style="text-align:center;">—</td><td style="text-align:center;">—</td></tr>
+            <tr><td>2</td><td>Arquitetura e Design</td><td style="text-align:center;">—</td><td style="text-align:center;">—</td></tr>
+            <tr><td>3</td><td>Desenvolvimento e Code Quality</td><td style="text-align:center;">—</td><td style="text-align:center;">—</td></tr>
+            <tr><td>4</td><td>Testes e Qualidade</td><td style="text-align:center;">—</td><td style="text-align:center;">—</td></tr>
+            <tr><td>5</td><td>CI/CD e DevOps</td><td style="text-align:center;">—</td><td style="text-align:center;">—</td></tr>
+            <tr><td>6</td><td>Segurança (DevSecOps)</td><td style="text-align:center;">—</td><td style="text-align:center;">—</td></tr>
+            <tr><td>7</td><td>Observabilidade e Monitoramento</td><td style="text-align:center;">—</td><td style="text-align:center;">—</td></tr>
+            <tr><td>8</td><td>Documentação</td><td style="text-align:center;">—</td><td style="text-align:center;">—</td></tr>
+            <tr><td>9</td><td>Gestão de Incidentes</td><td style="text-align:center;">—</td><td style="text-align:center;">—</td></tr>
+            <tr><td>10</td><td>Processos Ágeis e Fluxo</td><td style="text-align:center;">—</td><td style="text-align:center;">—</td></tr>
+        </tbody>
+    </table>
+
+    <br>
+    <div class="info-box">
+        <p><em>Documento gerado para assessment da Squad Extrato — Ciclo de Desenvolvimento de Software</em></p>
+        <p><em>Julho 2026</em></p>
+    </div>
+</div>
+
+</body>
+</html>

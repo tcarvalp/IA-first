@@ -74,6 +74,18 @@
             margin-bottom: 1rem;
         }
         .btn-back:hover { background: var(--accent); }
+        .btn-load {
+            display: inline-block;
+            background: #ff8f00;
+            color: white;
+            padding: 0.35rem 0.8rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.78rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-load:hover { background: #e65100; }
         .count { color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem; }
     </style>
 </head>
@@ -95,6 +107,7 @@
                         <th>Arquivo</th>
                         <th>Tamanho</th>
                         <th>Última Modificação</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -103,6 +116,7 @@
                         <td>📄 {{ arq.nome }}</td>
                         <td>{{ arq.tamanho_kb }} KB</td>
                         <td>{{ arq.modificado }}</td>
+                        <td><a href="/carregar/{{ arq.nome }}?path={{ save_path }}" class="btn-load">📂 Carregar</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

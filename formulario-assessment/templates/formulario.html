@@ -394,7 +394,10 @@
     </div>
     {% endif %}
 
-    <form method="POST" action="/salvar" id="assessment-form">
+    <form method="POST" action="/salvar" id="assessment-form" autocomplete="off">
+    {% if loaded_file %}
+    <input type="hidden" name="loaded_file" value="{{ loaded_file }}">
+    {% endif %}
     <div class="container">
 
         <!-- METADADOS -->
@@ -623,6 +626,29 @@
         // Set today's date
         document.getElementById('data_entrevista').valueAsDate = new Date();
 
+        // Limpar formulário ao carregar página limpa (sem dados carregados)
+        {% if not loaded_data %}
+        function clearForm() {
+            document.querySelectorAll('.question-input').forEach(el => { el.value = ''; });
+            document.querySelectorAll('input[type="text"]').forEach(el => { el.value = ''; });
+            document.querySelectorAll('select').forEach(el => { el.selectedIndex = 0; });
+            document.querySelector('[name="observacoes_gerais"]').value = '';
+            const notesEl = document.querySelector('[name="anotacoes_gerais_livres"]');
+            if (notesEl) notesEl.value = '';
+            document.querySelectorAll('.section-accordion.disabled').forEach(details => {
+                details.classList.remove('disabled');
+                const btn = details.querySelector('.btn-na');
+                if (btn) { btn.classList.remove('active'); btn.textContent = 'Não se aplica'; }
+                details.querySelectorAll('.question-input').forEach(ta => { ta.disabled = false; ta.value = ''; });
+            });
+            document.getElementById('data_entrevista').valueAsDate = new Date();
+            updateProgress();
+        }
+        clearForm();
+        setTimeout(clearForm, 100);
+        setTimeout(clearForm, 500);
+        {% endif %}
+
         // Attach progress listener
         document.querySelectorAll('.question-input').forEach(el => {
             el.addEventListener('input', updateProgress);
@@ -630,7 +656,16 @@
         updateProgress();
 
         // Auto-save warning
+        let isSaving = false;
+        document.getElementById('assessment-form').addEventListener('submit', function() {
+            isSaving = true;
+            // Habilitar campos disabled (N/A) para que sejam enviados no submit
+            document.querySelectorAll('.question-input:disabled').forEach(el => {
+                el.disabled = false;
+            });
+        });
         window.addEventListener('beforeunload', function(e) {
+            if (isSaving) return;
             const fields = document.querySelectorAll('.question-input');
             let hasContent = false;
             fields.forEach(f => { if (f.value.trim()) hasContent = true; });
@@ -696,6 +731,23 @@
                 const notesField = document.querySelector('[name="anotacoes_gerais_livres"]');
                 if (notesField) notesField.value = data.anotacoes_gerais_livres;
             }
+
+            // Marcar seções como "Não se aplica" se TODAS as respostas da seção forem "Não se aplica"
+            document.querySelectorAll('.section-accordion').forEach(details => {
+                const textareas = details.querySelectorAll('.question-input');
+                if (textareas.length === 0) return;
+                const allNA = Array.from(textareas).every(ta => ta.value.trim() === 'Não se aplica');
+                if (allNA && textareas.length > 0 && textareas[0].value.trim() !== '') {
+                    const btn = details.querySelector('.btn-na');
+                    if (btn) {
+                        btn.classList.add('active');
+                        btn.textContent = '✓ N/A';
+                        details.classList.add('disabled');
+                        details.removeAttribute('open');
+                        textareas.forEach(ta => { ta.disabled = true; });
+                    }
+                }
+            });
 
             // Atualizar progresso
             updateProgress();

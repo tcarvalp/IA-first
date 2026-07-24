@@ -551,7 +551,7 @@
         <input type="text" name="save_path" id="save_path" class="save-path-input"
                value="{{ save_path }}">
         <button type="submit" class="btn-save">💾 Salvar Entrevista</button>
-        <button type="submit" class="btn-files" name="redirect_to" value="arquivos">📂 Arquivos</button>
+        <a href="/arquivos" class="btn-files" onclick="return confirm('⚠️ Dados não salvos serão perdidos.\nDeseja continuar para a página de Arquivos?');">📂 Arquivos</a>
     </div>
     </form>
 

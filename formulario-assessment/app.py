@@ -191,10 +191,6 @@ def salvar():
     except OSError as e:
         flash(f"Erro ao salvar: {e}", "error")
 
-    # Redirecionar para arquivos se solicitado
-    if form_data.get("redirect_to") == "arquivos":
-        return redirect(url_for("listar_arquivos"))
-
     return redirect(url_for("index"))
 
 

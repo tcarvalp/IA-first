@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Squad Extrato — Formulário de Entrevista</title>
+    <style>
+        :root {
+            --primary: #1a237e;
+            --primary-light: #3949ab;
+            --accent: #0d47a1;
+            --success: #2e7d32;
+            --warning: #e65100;
+            --error: #c62828;
+            --bg: #f5f7fa;
+            --card: #ffffff;
+            --text: #2c3e50;
+            --text-light: #546e7a;
+            --border: #e0e0e0;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow);
+        }
+        .header h1 { font-size: 1.5rem; font-weight: 600; }
+        .header p { opacity: 0.85; font-size: 0.9rem; margin-top: 0.25rem; }
+
+        /* Flash messages */
+        .flash {
+            padding: 1rem 2rem;
+            margin: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .flash-success { background: #e8f5e9; color: var(--success); border: 1px solid #a5d6a7; }
+        .flash-error { background: #ffebee; color: var(--error); border: 1px solid #ef9a9a; }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Metadata section */
+        .metadata-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+        .metadata-card h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .field-group { display: flex; flex-direction: column; }
+        .field-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+        .field-group input,
+        .field-group select,
+        .field-group textarea {
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+        }
+        .field-group input:focus,
+        .field-group select:focus,
+        .field-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 0;
+            border-bottom: 2px solid var(--border);
+            overflow-x: auto;
+        }
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: var(--primary); }
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Accordion sections */
+        .section-accordion {
+            background: var(--card);
+            border-radius: 12px;
+            margin: 0.6rem 0;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .section-accordion summary {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            user-select: none;
+        }
+        .section-accordion summary::-webkit-details-marker { display: none; }
+        .section-accordion summary::before {
+            content: "▶";
+            font-size: 0.7rem;
+            color: var(--accent);
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .section-accordion[open] summary::before {
+            transform: rotate(90deg);
+        }
+        .section-accordion summary:hover {
+            background: #f5f7fa;
+        }
+        .section-accordion summary h3 {
+            color: var(--accent);
+            font-size: 0.95rem;
+            margin: 0;
+            flex: 1;
+        }
+        .section-accordion summary .section-count {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            background: #e8eaf6;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+        .btn-na {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--text-light);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        .btn-na:hover { border-color: var(--warning); color: var(--warning); }
+        .btn-na.active {
+            background: var(--warning);
+            color: #fff;
+            border-color: var(--warning);
+        }
+        .section-accordion.disabled {
+            opacity: 0.5;
+        }
+        .section-accordion.disabled summary h3 {
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+        .section-accordion.disabled summary::before { color: var(--text-light); }
+        .section-accordion.disabled .section-body {
+            pointer-events: none;
+        }
+        .section-accordion .section-body {
+            padding: 0 1.5rem 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .question-item {
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .question-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .question-label {
+            font-weight: 500;
+            font-size: 0.88rem;
+            color: var(--text);
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+        .question-input {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.88rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+            transition: border-color 0.2s;
+        }
+        .question-input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+
+        /* Progress */
+        .progress-bar {
+            background: var(--border);
+            border-radius: 10px;
+            height: 8px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-align: right;
+        }
+
+        /* Save bar (fixed bottom) */
+        .save-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1000;
+        }
+        .save-bar label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-light);
+            white-space: nowrap;
+        }
+        .save-path-input {
+            flex: 1;
+            padding: 0.4rem 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-family: 'Consolas', monospace;
+            min-width: 200px;
+        }
+        .save-path-input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+        }
+        .btn-save {
+            background: linear-gradient(135deg, var(--success), #388e3c);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.4rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 2px 6px rgba(46, 125, 50, 0.3);
+            white-space: nowrap;
+        }
+        .btn-save:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(46, 125, 50, 0.4);
+        }
+        .btn-save:active { transform: translateY(0); }
+        .btn-files {
+            background: var(--primary-light);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-files:hover { background: var(--primary); }
+        /* Space at page bottom so content doesn't hide behind the bar */
+        .bottom-spacer { height: 60px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .metadata-grid { grid-template-columns: 1fr; }
+            .tabs { flex-wrap: nowrap; }
+            .tab-btn { padding: 0.6rem 1rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📋 Assessment do Ciclo de Desenvolvimento de Software</h1>
+        <p>Squad Extrato — APP Bancário (Mobile + Portal Web)</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/salvar" id="assessment-form">
+    <div class="container">
+
+        <!-- METADADOS -->
+        <div class="metadata-card">
+            <h2>📝 Dados da Entrevista</h2>
+            <div class="metadata-grid">
+                <div class="field-group">
+                    <label for="entrevistador">Entrevistador(a):</label>
+                    <select name="entrevistador" id="entrevistador" required>
+                        <option value="">Selecione...</option>
+                        {% for e in entrevistadores %}
+                        <option value="{{ e }}">{{ e }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label for="stakeholder">Stakeholder Entrevistado:</label>
+                    <select name="stakeholder" id="stakeholder" required>
+                        <option value="">Selecione...</option>
+                        {% for s in stakeholders %}
+                        <option value="{{ s }}">{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label for="nome_entrevistado">Nome do Entrevistado:</label>
+                    <input type="text" name="nome_entrevistado" id="nome_entrevistado" 
+                           placeholder="Ex: João Silva" required>
+                </div>
+                <div class="field-group">
+                    <label for="cargo_entrevistado">Cargo/Papel:</label>
+                    <input type="text" name="cargo_entrevistado" id="cargo_entrevistado" 
+                           placeholder="Ex: Tech Lead">
+                </div>
+                <div class="field-group">
+                    <label for="data_entrevista">Data da Entrevista:</label>
+                    <input type="date" name="data_entrevista" id="data_entrevista" required>
+                </div>
+                <div class="field-group">
+                    <label for="observacoes_gerais">Observações Gerais:</label>
+                    <textarea name="observacoes_gerais" id="observacoes_gerais" rows="2"
+                              placeholder="Contexto, duração, ambiente..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABAS -->
+        <div class="tabs" role="tablist">
+            <button type="button" class="tab-btn active" onclick="switchTab('qualidade')" 
+                    role="tab" aria-selected="true">🔍 5. Qualidade (Eng. Qualidade)</button>
+            <button type="button" class="tab-btn" onclick="switchTab('desenvolvimento')" 
+                    role="tab" aria-selected="false">💻 6. Desenvolvimento (Eng. Desenvolvimento)</button>
+            <button type="button" class="tab-btn" onclick="switchTab('compartilhada')" 
+                    role="tab" aria-selected="false">🤝 7. Compartilhado (Ambos)</button>
+        </div>
+
+        <!-- ABA QUALIDADE -->
+        <div id="tab-qualidade" class="tab-content active" role="tabpanel">
+            {% for secao, perguntas in perguntas_qualidade.items() %}
+            <details class="section-accordion">
+                <summary>
+                    <h3>{{ secao }}</h3>
+                    <span class="section-count">{{ perguntas|length }} perguntas</span>
+                    <button type="button" class="btn-na" onclick="toggleNA(this, event)" title="Marcar como Não se Aplica">Não se aplica</button>
+                </summary>
+                <div class="section-body">
+                {% for pergunta in perguntas %}
+                <div class="question-item">
+                    <label class="question-label">{{ pergunta }}</label>
+                    <textarea class="question-input count-qual" 
+                              name="qual__{{ secao }}__{{ loop.index0 }}"
+                              placeholder="Resposta do entrevistado..."></textarea>
+                </div>
+                {% endfor %}
+                </div>
+            </details>
+            {% endfor %}
+            <div class="progress-bar"><div class="progress-fill" id="progress-qual" style="width:0%"></div></div>
+            <p class="progress-text" id="progress-qual-text">0 / 0 respondidas</p>
+        </div>
+
+        <!-- ABA DESENVOLVIMENTO -->
+        <div id="tab-desenvolvimento" class="tab-content" role="tabpanel">
+            {% for secao, perguntas in perguntas_desenvolvimento.items() %}
+            <details class="section-accordion">
+                <summary>
+                    <h3>{{ secao }}</h3>
+                    <span class="section-count">{{ perguntas|length }} perguntas</span>
+                    <button type="button" class="btn-na" onclick="toggleNA(this, event)" title="Marcar como Não se Aplica">Não se aplica</button>
+                </summary>
+                <div class="section-body">
+                {% for pergunta in perguntas %}
+                <div class="question-item">
+                    <label class="question-label">{{ pergunta }}</label>
+                    <textarea class="question-input count-dev" 
+                              name="dev__{{ secao }}__{{ loop.index0 }}"
+                              placeholder="Resposta do entrevistado..."></textarea>
+                </div>
+                {% endfor %}
+                </div>
+            </details>
+            {% endfor %}
+            <div class="progress-bar"><div class="progress-fill" id="progress-dev" style="width:0%"></div></div>
+            <p class="progress-text" id="progress-dev-text">0 / 0 respondidas</p>
+        </div>
+
+        <!-- ABA COMPARTILHADA -->
+        <div id="tab-compartilhada" class="tab-content" role="tabpanel">
+            {% for secao, perguntas in perguntas_compartilhadas.items() %}
+            <details class="section-accordion">
+                <summary>
+                    <h3>{{ secao }}</h3>
+                    <span class="section-count">{{ perguntas|length }} perguntas</span>
+                    <button type="button" class="btn-na" onclick="toggleNA(this, event)" title="Marcar como Não se Aplica">Não se aplica</button>
+                </summary>
+                <div class="section-body">
+                {% for pergunta in perguntas %}
+                <div class="question-item">
+                    <label class="question-label">{{ pergunta }}</label>
+                    <textarea class="question-input count-comp" 
+                              name="comp__{{ secao }}__{{ loop.index0 }}"
+                              placeholder="Resposta do entrevistado..."></textarea>
+                </div>
+                {% endfor %}
+                </div>
+            </details>
+            {% endfor %}
+            <div class="progress-bar"><div class="progress-fill" id="progress-comp" style="width:0%"></div></div>
+            <p class="progress-text" id="progress-comp-text">0 / 0 respondidas</p>
+        </div>
+
+        <div class="bottom-spacer"></div>
+    </div>
+
+    <!-- Barra fixa de salvamento no rodapé -->
+    <div class="save-bar">
+        <label for="save_path">📁 Pasta:</label>
+        <input type="text" name="save_path" id="save_path" class="save-path-input"
+               value="{{ save_path }}">
+        <button type="submit" class="btn-save">💾 Salvar Entrevista</button>
+        <a href="/arquivos" class="btn-files">📂 Arquivos</a>
+    </div>
+    </form>
+
+    <script>
+        // Toggle "Não se aplica"
+        function toggleNA(btn, e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const details = btn.closest('.section-accordion');
+            const isDisabling = !btn.classList.contains('active');
+
+            btn.classList.toggle('active');
+            details.classList.toggle('disabled');
+
+            const textareas = details.querySelectorAll('.question-input');
+            if (isDisabling) {
+                // Desativar: fechar o accordion, preencher com "Não se aplica"
+                details.removeAttribute('open');
+                textareas.forEach(ta => {
+                    ta.dataset.prevValue = ta.value;
+                    ta.value = 'Não se aplica';
+                    ta.disabled = true;
+                });
+                btn.textContent = '✓ N/A';
+            } else {
+                // Reativar: restaurar valores anteriores
+                textareas.forEach(ta => {
+                    ta.value = ta.dataset.prevValue || '';
+                    ta.disabled = false;
+                    delete ta.dataset.prevValue;
+                });
+                btn.textContent = 'Não se aplica';
+            }
+            updateProgress();
+        }
+
+        // Tabs
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+                el.setAttribute('aria-selected', 'false');
+            });
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+            event.target.setAttribute('aria-selected', 'true');
+        }
+
+        // Progress tracking
+        function updateProgress() {
+            updateProgressFor('qual');
+            updateProgressFor('dev');
+            updateProgressFor('comp');
+        }
+
+        function updateProgressFor(prefix) {
+            const fields = document.querySelectorAll('.count-' + prefix);
+            const total = fields.length;
+            let filled = 0;
+            fields.forEach(f => { if (f.value.trim()) filled++; });
+            const pct = total > 0 ? Math.round((filled / total) * 100) : 0;
+            
+            const bar = document.getElementById('progress-' + prefix);
+            const text = document.getElementById('progress-' + prefix + '-text');
+            if (bar) bar.style.width = pct + '%';
+            if (text) text.textContent = filled + ' / ' + total + ' respondidas (' + pct + '%)';
+        }
+
+        // Set today's date
+        document.getElementById('data_entrevista').valueAsDate = new Date();
+
+        // Attach progress listener
+        document.querySelectorAll('.question-input').forEach(el => {
+            el.addEventListener('input', updateProgress);
+        });
+        updateProgress();
+
+        // Auto-save warning
+        window.addEventListener('beforeunload', function(e) {
+            const fields = document.querySelectorAll('.question-input');
+            let hasContent = false;
+            fields.forEach(f => { if (f.value.trim()) hasContent = true; });
+            if (hasContent) {
+                e.preventDefault();
+                e.returnValue = 'Você tem dados não salvos. Deseja sair?';
+            }
+        });
+    </script>
+</body>
+</html>

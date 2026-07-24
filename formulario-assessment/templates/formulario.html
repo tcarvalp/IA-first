@@ -106,13 +106,14 @@
             margin-bottom: 0;
             border-bottom: 2px solid var(--border);
             overflow-x: auto;
+            flex-wrap: wrap;
         }
         .tab-btn {
-            padding: 0.8rem 1.5rem;
+            padding: 0.7rem 1.2rem;
             border: none;
             background: transparent;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: var(--text-light);
             border-bottom: 3px solid transparent;
@@ -437,11 +438,11 @@
         <!-- ABAS -->
         <div class="tabs" role="tablist">
             <button type="button" class="tab-btn active" onclick="switchTab('qualidade')" 
-                    role="tab" aria-selected="true">🔍 5. Qualidade (Eng. Qualidade)</button>
+                    role="tab" aria-selected="true">🔍 5. Qualidade</button>
             <button type="button" class="tab-btn" onclick="switchTab('desenvolvimento')" 
-                    role="tab" aria-selected="false">💻 6. Desenvolvimento (Eng. Desenvolvimento)</button>
+                    role="tab" aria-selected="false">💻 6. Desenvolvimento</button>
             <button type="button" class="tab-btn" onclick="switchTab('compartilhada')" 
-                    role="tab" aria-selected="false">🤝 7. Compartilhado (Ambos)</button>
+                    role="tab" aria-selected="false">🤝 7. Compartilhado</button>
             <button type="button" class="tab-btn" onclick="switchTab('anotacoes')" 
                     role="tab" aria-selected="false">📝 Anotações Gerais</button>
         </div>

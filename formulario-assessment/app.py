@@ -9,9 +9,27 @@ Acesso: http://localhost:5000
 import json
 import os
 import sys
+import threading
+import time
 from datetime import datetime
 
 from flask import Flask, render_template, request, redirect, url_for, flash
+
+
+# Auto-shutdown: desliga o servidor se ninguém acessar por N minutos
+AUTO_SHUTDOWN_MINUTES = 30
+last_activity = time.time()
+
+
+def auto_shutdown_watcher():
+    """Thread que monitora inatividade e desliga o servidor."""
+    global last_activity
+    while True:
+        time.sleep(60)  # Verifica a cada 1 minuto
+        idle_minutes = (time.time() - last_activity) / 60
+        if idle_minutes >= AUTO_SHUTDOWN_MINUTES:
+            print(f"\n⏱️  Servidor inativo por {AUTO_SHUTDOWN_MINUTES} min. Desligando...")
+            os._exit(0)
 
 
 def get_base_path():
@@ -30,6 +48,15 @@ from perguntas import PERGUNTAS_QUALIDADE, PERGUNTAS_DESENVOLVIMENTO, PERGUNTAS_
 
 app = Flask(__name__, template_folder=os.path.join(base_path, "templates"))
 app.secret_key = "assessment-squad-extrato-2026"
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.jinja_env.auto_reload = True
+
+
+@app.before_request
+def update_activity():
+    """Atualiza timestamp de última atividade a cada request."""
+    global last_activity
+    last_activity = time.time()
 
 
 @app.route("/")
@@ -157,7 +184,12 @@ if __name__ == "__main__":
     print("  📋 Formulário de Assessment — Squad Extrato")
     print("  🌐 Acesse: http://localhost:5000")
     print("  📂 Salvando em:", DEFAULT_SAVE_PATH)
+    print(f"  ⏱️  Auto-desliga após {AUTO_SHUTDOWN_MINUTES} min de inatividade")
     print("=" * 60 + "\n")
 
+    # Iniciar thread de auto-shutdown
+    watcher = threading.Thread(target=auto_shutdown_watcher, daemon=True)
+    watcher.start()
+
     # Para acesso na rede, use host='0.0.0.0'
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=False, host="0.0.0.0", port=5000)

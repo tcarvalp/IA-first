@@ -62,6 +62,10 @@ def update_activity():
 @app.route("/")
 def index():
     """Página principal com o formulário."""
+    # Verificar se há dados pré-carregados de um arquivo
+    loaded_data = None
+    loaded_file = request.args.get("loaded_file", "")
+    
     return render_template(
         "formulario.html",
         entrevistadores=ENTREVISTADORES,
@@ -70,6 +74,38 @@ def index():
         perguntas_desenvolvimento=PERGUNTAS_DESENVOLVIMENTO,
         perguntas_compartilhadas=PERGUNTAS_COMPARTILHADAS,
         save_path=DEFAULT_SAVE_PATH,
+        loaded_data=loaded_data,
+        loaded_file=loaded_file,
+    )
+
+
+@app.route("/carregar/<filename>")
+def carregar(filename):
+    """Carrega um JSON salvo e renderiza o formulário preenchido."""
+    save_path = request.args.get("path", DEFAULT_SAVE_PATH)
+    filepath = os.path.join(save_path, filename)
+
+    if not os.path.exists(filepath):
+        flash(f"Arquivo não encontrado: {filename}", "error")
+        return redirect(url_for("index"))
+
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            loaded_data = json.load(f)
+    except (json.JSONDecodeError, OSError) as e:
+        flash(f"Erro ao ler arquivo: {e}", "error")
+        return redirect(url_for("index"))
+
+    return render_template(
+        "formulario.html",
+        entrevistadores=ENTREVISTADORES,
+        stakeholders=STAKEHOLDERS,
+        perguntas_qualidade=PERGUNTAS_QUALIDADE,
+        perguntas_desenvolvimento=PERGUNTAS_DESENVOLVIMENTO,
+        perguntas_compartilhadas=PERGUNTAS_COMPARTILHADAS,
+        save_path=save_path,
+        loaded_data=loaded_data,
+        loaded_file=filename,
     )
 
 
@@ -154,6 +190,10 @@ def salvar():
         flash(f"Formulário salvo com sucesso: {filepath}", "success")
     except OSError as e:
         flash(f"Erro ao salvar: {e}", "error")
+
+    # Redirecionar para arquivos se solicitado
+    if form_data.get("redirect_to") == "arquivos":
+        return redirect(url_for("listar_arquivos"))
 
     return redirect(url_for("index"))
 

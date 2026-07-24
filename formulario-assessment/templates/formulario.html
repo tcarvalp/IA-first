@@ -388,6 +388,12 @@
     {% endif %}
     {% endwith %}
 
+    {% if loaded_file %}
+    <div class="flash flash-success" style="margin:1rem 2rem; background:#fff3e0; color:#e65100; border:1px solid #ffcc80;">
+        📂 Formulário carregado de: <strong>{{ loaded_file }}</strong> — Edite e salve para atualizar.
+    </div>
+    {% endif %}
+
     <form method="POST" action="/salvar" id="assessment-form">
     <div class="container">
 
@@ -545,7 +551,7 @@
         <input type="text" name="save_path" id="save_path" class="save-path-input"
                value="{{ save_path }}">
         <button type="submit" class="btn-save">💾 Salvar Entrevista</button>
-        <a href="/arquivos" class="btn-files">📂 Arquivos</a>
+        <button type="submit" class="btn-files" name="redirect_to" value="arquivos">📂 Arquivos</button>
     </div>
     </form>
 
@@ -633,6 +639,68 @@
                 e.returnValue = 'Você tem dados não salvos. Deseja sair?';
             }
         });
+
+        // Carregar dados de um arquivo JSON salvo anteriormente
+        {% if loaded_data %}
+        (function() {
+            const data = {{ loaded_data | tojson }};
+            
+            // Preencher metadados
+            if (data.metadata) {
+                const m = data.metadata;
+                const entrevistadorSel = document.getElementById('entrevistador');
+                for (let opt of entrevistadorSel.options) {
+                    if (opt.value === m.entrevistador) { opt.selected = true; break; }
+                }
+                const stakeholderSel = document.getElementById('stakeholder');
+                for (let opt of stakeholderSel.options) {
+                    if (opt.value === m.stakeholder) { opt.selected = true; break; }
+                }
+                document.getElementById('nome_entrevistado').value = m.nome_entrevistado || '';
+                document.getElementById('cargo_entrevistado').value = m.cargo_entrevistado || '';
+                if (m.data_entrevista) {
+                    document.getElementById('data_entrevista').value = m.data_entrevista;
+                }
+                document.getElementById('observacoes_gerais').value = m.observacoes_gerais || '';
+            }
+
+            // Função auxiliar para preencher respostas por prefixo
+            function fillResponses(prefix, respostas) {
+                if (!respostas) return;
+                // Construir mapa de chave simplificada -> valor
+                const respostaMap = {};
+                for (const [chave, valor] of Object.entries(respostas)) {
+                    respostaMap[chave] = valor;
+                }
+                // Iterar sobre os campos do form com o prefixo
+                document.querySelectorAll(`[name^="${prefix}__"]`).forEach(field => {
+                    const name = field.getAttribute('name');
+                    // name format: "qual__5.1 Processos de Qualidade__0"
+                    const withoutPrefix = name.substring(prefix.length + 2); // remove "qual__"
+                    // Tentar encontrar correspondência: "5.1 Processos de Qualidade__0" -> "5.1 Processos de Qualidade | 0"
+                    const key = withoutPrefix.replace('__', ' | ');
+                    if (respostaMap[key] !== undefined) {
+                        field.value = respostaMap[key];
+                    }
+                });
+            }
+
+            if (data.respostas) {
+                fillResponses('qual', data.respostas.qualidade);
+                fillResponses('dev', data.respostas.desenvolvimento);
+                fillResponses('comp', data.respostas.compartilhadas);
+            }
+
+            // Preencher anotações gerais
+            if (data.anotacoes_gerais_livres) {
+                const notesField = document.querySelector('[name="anotacoes_gerais_livres"]');
+                if (notesField) notesField.value = data.anotacoes_gerais_livres;
+            }
+
+            // Atualizar progresso
+            updateProgress();
+        })();
+        {% endif %}
     </script>
 </body>
 </html>

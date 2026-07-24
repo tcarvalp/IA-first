@@ -59,6 +59,15 @@ def update_activity():
     last_activity = time.time()
 
 
+@app.after_request
+def no_cache(response):
+    """Impede cache do navegador para garantir formulário limpo após salvar."""
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
+
+
 @app.route("/")
 def index():
     """Página principal com o formulário."""
@@ -181,7 +190,14 @@ def salvar():
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     nome_clean = metadados["nome_entrevistado"].replace(" ", "_") or "sem_nome"
-    nome_arquivo = f"assessment_{nome_clean}_{timestamp}.json"
+
+    # Se está editando um arquivo carregado, sobrescrever o mesmo arquivo
+    loaded_file = form_data.get("loaded_file", "").strip()
+    if loaded_file:
+        nome_arquivo = loaded_file
+    else:
+        nome_arquivo = f"assessment_{nome_clean}_{timestamp}.json"
+
     filepath = os.path.join(save_path, nome_arquivo)
 
     try:

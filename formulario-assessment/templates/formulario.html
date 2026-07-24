@@ -327,6 +327,43 @@
         /* Space at page bottom so content doesn't hide behind the bar */
         .bottom-spacer { height: 60px; }
 
+        /* Notes tab */
+        .section-card-notes {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: var(--shadow);
+            border-left: 4px solid #ff8f00;
+        }
+        .section-card-notes h3 {
+            color: #ff8f00;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .notes-description {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .notes-textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        .notes-textarea:focus {
+            outline: none;
+            border-color: #ff8f00;
+            box-shadow: 0 0 0 3px rgba(255, 143, 0, 0.1);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .container { padding: 1rem; }
@@ -405,6 +442,8 @@
                     role="tab" aria-selected="false">💻 6. Desenvolvimento (Eng. Desenvolvimento)</button>
             <button type="button" class="tab-btn" onclick="switchTab('compartilhada')" 
                     role="tab" aria-selected="false">🤝 7. Compartilhado (Ambos)</button>
+            <button type="button" class="tab-btn" onclick="switchTab('anotacoes')" 
+                    role="tab" aria-selected="false">📝 Anotações Gerais</button>
         </div>
 
         <!-- ABA QUALIDADE -->
@@ -480,6 +519,20 @@
             {% endfor %}
             <div class="progress-bar"><div class="progress-fill" id="progress-comp" style="width:0%"></div></div>
             <p class="progress-text" id="progress-comp-text">0 / 0 respondidas</p>
+        </div>
+
+        <!-- ABA ANOTAÇÕES GERAIS -->
+        <div id="tab-anotacoes" class="tab-content" role="tabpanel">
+            <div class="section-card-notes">
+                <h3>📝 Anotações Gerais da Entrevista</h3>
+                <p class="notes-description">
+                    Espaço livre para os Engenheiros de Qualidade e Desenvolvimento registrarem 
+                    percepções, insights, observações e informações adicionais que não estão 
+                    compreendidas nas questões estruturadas acima.
+                </p>
+                <textarea class="notes-textarea" name="anotacoes_gerais_livres"
+                          placeholder="Registre aqui percepções, insights, pontos de atenção, informações complementares, observações sobre o entrevistado, linguagem corporal, nível de confiança nas respostas, contradições identificadas, temas que merecem aprofundamento em nova entrevista, etc."></textarea>
+            </div>
         </div>
 
         <div class="bottom-spacer"></div>

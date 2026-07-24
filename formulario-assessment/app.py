@@ -92,6 +92,7 @@ def salvar():
             "desenvolvimento": respostas_desenvolvimento,
             "compartilhadas": respostas_compartilhadas,
         },
+        "anotacoes_gerais_livres": form_data.get("anotacoes_gerais_livres", "").strip(),
         "estatisticas": {
             "qualidade": {
                 "total": len(respostas_qualidade),
